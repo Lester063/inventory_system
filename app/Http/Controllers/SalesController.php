@@ -78,7 +78,7 @@ class SalesController extends Controller
 
 
 
-        return redirect()->route('sales.index')->with('error','Added sales successfully');
+        return redirect()->route('sales.index')->with('success','Added sales successfully');
     }
 
     /**

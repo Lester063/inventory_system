@@ -118,6 +118,10 @@ $(document).on('click','#add_new_input',function(){
         $('#totalnum_box').val(for_id);
     }
 });
+
+function remove(){
+    $(this).parent('div').remove();
+}
 /*
 $(document).on('click','.remove_input_sales',function(){
     document.getElementById('');

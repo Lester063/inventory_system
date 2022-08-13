@@ -28,7 +28,7 @@
 		        <input type="number" name="salesItem_quantity[]" class="form-control" placeholder="Sales Item Quantity" required autocomplete="salesitemquantity" autofocus>
 		    </div>
             <div class="col-xs-1 col-sm-1 col-md-1 form-group">
-                <button class="remove_input_sales"id="remove_input_sales">X</button>
+                <button class="remove_input_sales btn btn-danger"id="remove_input_sales"onclick="remove()">X</button>
             </div>
         </div>
 

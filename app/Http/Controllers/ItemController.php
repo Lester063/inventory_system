@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
+use App\Models\Sales;
+use App\Models\MySale;
 
 class ItemController extends Controller
 {
@@ -60,7 +62,10 @@ class ItemController extends Controller
     public function show($id)
     {
         $item= Item::find($id);
-        return view('item.show')->with('item',$item);
+        $mysales=MySale::all();
+        $sales=Sales::where('item_id',$id)->join('my_sales','my_sales.sales_code','=','sales.sales_code')->get(['sales.*','my_sales.*']);
+
+        return view('item.show')->with('item',$item)->with('sales',$sales);
 
     }
 
