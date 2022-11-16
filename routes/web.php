@@ -22,14 +22,19 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::resource('item', 'App\Http\Controllers\ItemController');
-Route::resource('sales', 'App\Http\Controllers\SalesController');
-Route::resource('suppliers','App\Http\Controllers\SupplierController');
-Route::resource('restock','App\Http\Controllers\ReStockController');
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
-
-Route::get('restockska/{id}', [ReStockController::class, 'restockska'])->name('restockska.id');
+    Route::resource('item', 'App\Http\Controllers\ItemController');
+    Route::resource('sales', 'App\Http\Controllers\SalesController');
+    Route::resource('suppliers','App\Http\Controllers\SupplierController');
+    Route::resource('restock','App\Http\Controllers\ReStockController');
+    
+    Route::get('filter', [SalesController::class,'indexess'])->name('sales.filter');
+    
+    
+    
+    Route::get('restockska/{id}', [ReStockController::class, 'restockska'])->name('restockska.id');
+});

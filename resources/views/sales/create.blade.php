@@ -5,6 +5,7 @@
 <input type="text"value=1 id="addnum_box">
 <input type="text"value=1 id="totalnum_box">
     <form action="{{ route('sales.store') }}" method="POST" enctype="multipart/form-data">
+        
     @csrf
 
         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -12,6 +13,7 @@
 		        <input type="text" name="buyer_name" class="form-control" placeholder="Buyer Name"  autocomplete="buyername" autofocus>
 		    </div>
 		</div>
+        
 <div>
         <div class="row mt-3 mb-2" id="input_sales">
 
@@ -28,7 +30,7 @@
 		        <input type="number" name="salesItem_quantity[]" class="form-control" placeholder="Sales Item Quantity" required autocomplete="salesitemquantity" autofocus>
 		    </div>
             <div class="col-xs-1 col-sm-1 col-md-1 form-group">
-                <button class="remove_input_sales btn btn-danger"id="remove_input_sales"onclick="remove()">X</button>
+                <input class="remove_input_sales btn btn-danger"id="remove_input_sales"onclick="remove()"value="XX">
             </div>
         </div>
 
@@ -41,6 +43,11 @@
 
         <button type="submit" class="btn btn-primary" onClick="address">Submit</button>
     </form>
-
-
+<!--
+<script>
+    function remove(){
+        alert('qweqw')
+}
+</script>
+-->
 @endsection

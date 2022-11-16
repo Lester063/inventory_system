@@ -12,6 +12,7 @@ class MySale extends Model
     protected $fillable=[
         'sales_code',
         'total_price',
-        'buyer_name'
+        'buyer_name',
+        'sold_date'
     ];
 }

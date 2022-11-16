@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('supplier_id');
             $table->string('item_id');
             $table->bigInteger('restock_quantity');
+            $table->bigInteger('itemrestockprice');
+            $table->bigInteger('totalrestockprice');
             $table->timestamps();
         });
     }

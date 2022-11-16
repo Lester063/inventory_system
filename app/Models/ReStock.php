@@ -12,5 +12,7 @@ class ReStock extends Model
         'supplier_id',
         'item_id',
         'restock_quantity',
+        'itemrestockprice',
+        'totalrestockprice',
     ];
 }

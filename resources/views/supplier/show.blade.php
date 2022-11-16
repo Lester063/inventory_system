@@ -7,6 +7,8 @@
             <th>#</th>
             <th>Item</th>
             <th>Quantity</th>
+            <th>Item Price</th>
+            <th>Total Price</th>
         </tr>
         <?php $x=0;?>
         @foreach($getSupplier_stocks as $stocks)
@@ -15,6 +17,8 @@
             <td>{{$x}}</td>
             <td>{{$stocks->item_name}}</td>
             <td>{{$stocks->restock_quantity}}</td>
+            <td>{{$stocks->itemrestockprice}}</td>
+            <td>{{$stocks->totalrestockprice}}</td>
         </tr>
         @endforeach
     </table>

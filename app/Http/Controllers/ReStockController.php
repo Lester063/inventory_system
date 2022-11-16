@@ -53,7 +53,8 @@ class ReStockController extends Controller
         $request->validate([
             'supplier_id'=>'required',
             'item_id'=>'required',
-            'restock_quantity'=>'required'
+            'restock_quantity'=>'required',
+            'itemrestockprice'=>'required'
         ]);
 
         //add the quantity to the designated id in Items table
@@ -64,11 +65,14 @@ class ReStockController extends Controller
             'item_quantity'=>$restock_addqty
         ]);
 
+        $totalrestockprice=$request->input('restock_quantity') * $request->input('itemrestockprice');
 
         $restock=ReStock::create([
             'supplier_id'=>$request->input('supplier_id'),
             'item_id'=>$request->input('item_id'),
             'restock_quantity'=>$request->input('restock_quantity'),
+            'itemrestockprice'=>$request->input('itemrestockprice'),
+            'totalrestockprice'=>$totalrestockprice
         ]);
         return redirect()->route('item.index')->with('success','ReStock Successfully');
     }

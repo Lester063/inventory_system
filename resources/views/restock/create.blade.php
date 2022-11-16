@@ -17,6 +17,8 @@
 
         <input type="number"name="restock_quantity"class="form-control mt-2" placeholder="Re-Stock Quantity" required>
 
+        <input type="number"name="itemrestockprice"class="form-control mt-2" placeholder="Re-Stock Price" required>
+
         <button type="submit" class="btn btn-primary mt-2">Re-Stock</button>
     </form>
 @endsection

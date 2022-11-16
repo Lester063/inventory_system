@@ -15,9 +15,31 @@ class SalesController extends Controller
      */
     public function index()
     {
-        $my_sales=MySale::orderBy('created_at','desc')->paginate(5);
-        return view('sales.index')->with('my_sales',$my_sales);
+        $totalSales=0;
+        $my_sales=MySale::orderBy('created_at','desc')->paginate(10);
+        return view('sales.index')->with('my_sales',$my_sales)->with('totalSales',$totalSales);
     }
+
+    public function indexess(Request $request)
+    {
+        $buyersName=$request->buyersName;
+        $fromDate=$request->fromDate;
+        $toDate=$request->toDate;
+        if(!$request->ajax()){
+            $my_sales=MySale::orderBy('created_at','desc')->paginate(10);
+            return view('sales.index')->with('my_sales',$my_sales);
+        }
+        else{
+            $totalSales=0;
+            $my_sales=MySale::where('buyer_name','LIKE','%'.$buyersName.'%')->
+            whereBetween('sold_date', [$fromDate, $toDate])
+            ->latest()->paginate(10);
+
+            return view('sales.mysalesdatacontainer')->with('my_sales',$my_sales)->with('totalSales',$totalSales);
+        }
+       
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -42,11 +64,24 @@ class SalesController extends Controller
             'item_id'=>'required',
             'salesItem_quantity'=>'required',
         ]);
+
+        $currentDate=now()->format('Y-m-d H:i:s');
+
         $get_mysale=MySale::count();
         //$getId=$get_mysale->id;
         $theId=$get_mysale+1;
         $scode="SA".$theId;
 
+        foreach(array_combine($request->input('item_id'),$request->input('salesItem_quantity')) as $item_id =>$qty){
+            $item=Item::find($item_id);
+            $get_item_qty=$item->item_quantity;
+            if($qty>$get_item_qty){
+                return redirect()->route('sales.create')->with('error','We dont have enough stocks to proceed with your order');
+            }
+            else if($qty == 0){
+                return redirect()->route('sales.create')->with('error','Enter a quantity.');
+            }
+        }
         foreach(array_combine($request->input('item_id'),$request->input('salesItem_quantity')) as $item_id => $qty){
             $item=Item::find($item_id);
             $get_item_qty=$item->item_quantity;
@@ -60,7 +95,8 @@ class SalesController extends Controller
                 'sales_code'=>$scode,
                 'item_id'=>$item_id,
                 'salesItem_quantity'=>$qty,
-                'sales_totalPrice'=>$price
+                'sales_totalPrice'=>$price,
+                
             ]);
 
             $item->update([
@@ -74,6 +110,7 @@ class SalesController extends Controller
             'sales_code'=>$scode,
             'buyer_name'=>$request->input('buyer_name'),
             'total_price'=>$get_totalPrice,
+            'sold_date'=>$currentDate,
         ]);
 
 

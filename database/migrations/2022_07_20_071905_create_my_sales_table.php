@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('sales_code');
             $table->string('buyer_name');
             $table->bigInteger('total_price');
+            $table->date('sold_date');
             $table->timestamps();
         });
     }

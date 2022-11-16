@@ -30,9 +30,6 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
                 <a class="navbar-brand" href="{{ route('item.index') }}">
                     Item
                 </a>
@@ -112,7 +109,7 @@ $(document).on('click','#add_new_input',function(){
         var for_id = parseInt($('#totalnum_box').val())+1;
         var original = document.getElementById('input_sales');
         var clone = original.cloneNode(true); // "deep" clone
-        clone.id = "input_sales" +for_id;
+        clone.id = for_id;
         original.parentNode.appendChild(clone);
 
         $('#totalnum_box').val(for_id);
@@ -120,12 +117,66 @@ $(document).on('click','#add_new_input',function(){
 });
 
 function remove(){
-    $(this).parent('div').remove();
+    var g=event.target.id;
+    var yo=$('#'+g).parent().parent().attr('id');
+      alert(yo);
+      $('#'+g).parent().parent().attr('id').remove();
 }
-/*
-$(document).on('click','.remove_input_sales',function(){
-    document.getElementById('');
-})*/
+
+
+//set the from and to to current date
+Date.prototype.toDateInputValue = (function() {
+    var local = new Date(this);
+    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+    return local.toJSON().slice(0,10);
+});
+document.getElementById('fromDate').value = new Date().toDateInputValue();
+document.getElementById('toDate').value = new Date().toDateInputValue();
+
+//disable dates of toDates before the fromDate
+var getfromDate=document.getElementById('fromDate').value;
+document.getElementById('toDate').min = getfromDate;
+var gettoDate=document.getElementById('toDate').value;
+document.getElementById('fromDate').max = gettoDate;
+//filtering sales from set date to set date
+
+
+//filter sales thru buyers name
+$(document).on('keyup','#filterSales',function(){
+    filterSalesThruBuyersName();
+});
+
+function filterSalesThruBuyersName(){
+    var buyersName=document.getElementById('filterSales').value;
+    var fromDate = document.getElementById("fromDate").value;
+    var toDate = document.getElementById("toDate").value;
+        $.ajax({
+        type:"get",
+        url: "{{route('sales.filter')}}",
+        data:{
+            'buyersName':buyersName,
+            'fromDate':fromDate,
+            'toDate':toDate
+        },
+            success:function(response){
+                $('.table').html(response);
+            }
+        })
+}
+
+function fromDateOnchange(){
+    filterSalesThruBuyersName();
+    var getfromDate=document.getElementById('fromDate').value;
+    document.getElementById('toDate').min = getfromDate;
+}
+function toDateOnchange(){
+    filterSalesThruBuyersName();
+    var gettoDate=document.getElementById('toDate').value;
+    document.getElementById('fromDate').max = gettoDate;
+}
+
 </script>
 </body>
 </html>
+<!-- https://softauthor.com/get-id-of-clicked-element-in-javascript/#:~:text=To%20get%20the%20clicked%20element,ID%20of%20the%20clicked%20element. -->
+
