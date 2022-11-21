@@ -4,7 +4,7 @@
 <h1>Add Sales<button class="btn btn-primary add_new_input"id="add_new_input">Add</button></h1>
 <input type="text"value=1 id="addnum_box">
 <input type="text"value=1 id="totalnum_box">
-    <form action="{{ route('sales.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('mysales.store') }}" method="POST" enctype="multipart/form-data">
         
     @csrf
 

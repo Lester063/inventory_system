@@ -5,6 +5,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ReStockController;
+use App\Http\Controllers\MySaleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,10 +30,11 @@ Route::group(['middleware' => ['auth']], function(){
 
     Route::resource('item', 'App\Http\Controllers\ItemController');
     Route::resource('sales', 'App\Http\Controllers\SalesController');
+    Route::resource('mysales', 'App\Http\Controllers\MySaleController');
     Route::resource('suppliers','App\Http\Controllers\SupplierController');
     Route::resource('restock','App\Http\Controllers\ReStockController');
     
-    Route::get('filter', [SalesController::class,'indexess'])->name('sales.filter');
+    Route::get('filter', [MySaleController::class,'indexess'])->name('mysales.filter');
     
     
     

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <a href="/sales" class="btn btn-secondary">Go Back</a>
+    <a href="/mysales" class="btn btn-secondary">Go Back</a>
     <h2>Name(Optional): {{$mysales->buyer_name}}</h2>
     <table class="table">
         <tr>

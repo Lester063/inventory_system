@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Edit Sales</h1>
-    <form action="{{route('sales.update',$mysales->id)}}" method="POST">
+    <form action="{{route('mysales.update',$mysales->id)}}" method="POST">
     	@csrf
         @method('PUT')
         @foreach($sales as $sale)

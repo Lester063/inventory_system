@@ -36,6 +36,9 @@
                 <a class="navbar-brand" href="{{ route('sales.index') }}">
                     Sales
                 </a>
+                <a class="navbar-brand" href="{{ route('mysales.index') }}">
+                    My Sales
+                </a>
                 <a class="navbar-brand" href="{{ route('suppliers.index') }}">
                     Supplier
                 </a>
@@ -152,7 +155,7 @@ function filterSalesThruBuyersName(){
     var toDate = document.getElementById("toDate").value;
         $.ajax({
         type:"get",
-        url: "{{route('sales.filter')}}",
+        url: "{{route('mysales.filter')}}",
         data:{
             'buyersName':buyersName,
             'fromDate':fromDate,
