@@ -16,8 +16,8 @@
             <tr>
                 <td>{{$item->item_name}}</td>
                 <td>{{$item->item_code}}</td>
-                <td>{{$item->item_quantity}}</td>
-                <td>{{$item->item_price}}</td>
+                <td>{{number_format($item->item_quantity)}}</td>
+                <td>{{number_format($item->item_price)}}</td>
                 <td>
                 <form action="{{ route('item.destroy',$item->id) }}" method="POST">
                     @csrf

@@ -10,8 +10,8 @@
             <tr>
                 <td>{{$sale->item_name}}</td>
                 <td>{{$sale->sales_code}}</td>
-                <td>{{$sale->salesItem_quantity}}</td>
-                <td>{{$sale->sales_totalPrice}}</td>
+                <td>{{number_format($sale->salesItem_quantity)}}</td>
+                <td>{{number_format($sale->sales_totalPrice)}}</td>
             </tr>
 
         @endforeach
