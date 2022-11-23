@@ -12,7 +12,7 @@
             <tr>
                 <td>{{$my_sale->sales_code}}</td>
                 <td>{{$my_sale->buyer_name}}</td>
-                <td>{{$my_sale->total_price}}</td>
+                <td>{{number_format($my_sale->total_price)}}</td>
                 <td>{{$my_sale->sold_date}}</td>
                 <?php $totalSales+=$my_sale->total_price?>
                 <td>
@@ -27,13 +27,8 @@
             </tr>
 
         @endforeach
-        <tr>
-            <td colspan=2>Total Sales:</td>
-            <td colspan=4><b>{{$totalSales}}</b></td>
-        </tr>
-        
     </table>
-        {{$my_sales->links('pagination::bootstrap-4')}}
+        
     @else
     <table class="table">
         <tr>

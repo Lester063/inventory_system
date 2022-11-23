@@ -17,8 +17,9 @@ class MySaleController extends Controller
     public function index()
     {
         $totalSales=0;
-        $my_sales=MySale::orderBy('created_at','desc')->paginate(2);
-        return view('mysales.index')->with('my_sales',$my_sales)->with('totalSales',$totalSales);
+        $totalPrice=MySale::all()->sum('total_price');
+        $my_sales=MySale::latest()->paginate(10);
+        return view('mysales.index')->with('my_sales',$my_sales)->with('totalSales',$totalSales)->with('totalPrice',$totalPrice);
     }
     public function indexess(Request $request)
     {
@@ -26,16 +27,18 @@ class MySaleController extends Controller
         $fromDate=$request->fromDate;
         $toDate=$request->toDate;
         if(!$request->ajax()){
-            $my_sales=MySale::orderBy('created_at','desc')->paginate(10);
-            return view('mysales.index')->with('my_sales',$my_sales);
+            $my_sales=MySale::latest()->paginate(10);
+            return view('mysales.mysalesdatacontainer')->with('my_sales',$my_sales);
         }
         else{
             $totalSales=0;
+            $totalPrice=MySale::where('buyer_name','LIKE','%'.$buyersName.'%')->
+            whereBetween('sold_date', [$fromDate, $toDate])->sum('total_price');
             $my_sales=MySale::where('buyer_name','LIKE','%'.$buyersName.'%')->
             whereBetween('sold_date', [$fromDate, $toDate])
             ->latest()->paginate(10);
 
-            return view('mysales.mysalesdatacontainer')->with('my_sales',$my_sales)->with('totalSales',$totalSales);
+            return view('mysales.mysalesdatacontainer')->with('my_sales',$my_sales)->with('totalSales',$totalSales)->with('totalPrice',$totalPrice);
         }
        
     }
@@ -62,7 +65,7 @@ class MySaleController extends Controller
             'item_id'=>'required',
             'salesItem_quantity'=>'required',
         ]);
-
+        $buyerName=
         $currentDate=now()->format('Y-m-d H:i:s');
 
         $get_mysale=MySale::count();
