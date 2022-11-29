@@ -14,5 +14,6 @@ class Sales extends Model
         'sales_code',
         'salesItem_quantity',
         'sales_totalPrice',
+        'sold_date',
     ];
 }

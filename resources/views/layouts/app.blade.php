@@ -136,6 +136,7 @@ Date.prototype.toDateInputValue = (function() {
 document.getElementById('fromDate').value = new Date().toDateInputValue();
 document.getElementById('toDate').value = new Date().toDateInputValue();
 
+
 //disable dates of toDates before the fromDate
 var getfromDate=document.getElementById('fromDate').value;
 document.getElementById('toDate').min = getfromDate;
@@ -153,9 +154,10 @@ function filterSalesThruBuyersName(){
     var buyersName=document.getElementById('filterSales').value;
     var fromDate = document.getElementById("fromDate").value;
     var toDate = document.getElementById("toDate").value;
+
         $.ajax({
         type:"get",
-        url: "{{route('mysales.filter')}}",
+        url: "{{route('mysales.mysalesfilter')}}",
         data:{
             'buyersName':buyersName,
             'fromDate':fromDate,
@@ -176,6 +178,44 @@ function toDateOnchange(){
     filterSalesThruBuyersName();
     var gettoDate=document.getElementById('toDate').value;
     document.getElementById('fromDate').max = gettoDate;
+}
+
+
+function itemsalesfromDateOnchange(){
+    SalesFilter();
+}
+function itemsalestoDateOnchange(){
+    SalesFilter();
+}
+//Sales
+function SalesFilter(){
+    var fromDate = document.getElementById("itemsalesfromDate").value;
+    var toDate = document.getElementById("itemsalestoDate").value;
+    var itemsFilter = [];
+    $("input[name='filterItem[]']:checked").each(function(){
+        itemsFilter.push($(this).val());
+    });
+
+        $.ajax({
+        type:"get",
+        url: "{{route('sales.salesfilter')}}",
+        data:{
+            'itemsalesfromDate':fromDate,
+            'itemsalestoDate':toDate,
+            'itemsFilter':itemsFilter,
+        },
+            success:function(response){
+                $('.table').html(response);
+                //document.getElementById('numnum').innerHTML={{$numnum}};
+            }
+        })
+}
+/*
+$('.filterItem').click(function(){
+    SalesFilter();
+})*/
+function filterItem(){
+    SalesFilter();
 }
 
 </script>

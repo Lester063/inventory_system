@@ -1,5 +1,6 @@
 @if(count($sales) > 0)
     <table class="table">
+    {{$numnum}}
         <tr>
             <th>Item</th>
             <th>Sales Code</th>

@@ -34,8 +34,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::resource('suppliers','App\Http\Controllers\SupplierController');
     Route::resource('restock','App\Http\Controllers\ReStockController');
     
-    Route::get('filter', [MySaleController::class,'indexess'])->name('mysales.filter');
-    
+    Route::get('mysalesfilter', [MySaleController::class,'indexess'])->name('mysales.mysalesfilter');
+    Route::get('salesfilter', [SalesController::class,'indexess'])->name('sales.salesfilter');
     
     
     Route::get('restockska/{id}', [ReStockController::class, 'restockska'])->name('restockska.id');

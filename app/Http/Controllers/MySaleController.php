@@ -97,6 +97,7 @@ class MySaleController extends Controller
                 'item_id'=>$item_id,
                 'salesItem_quantity'=>$qty,
                 'sales_totalPrice'=>$price,
+                'sold_date'=>$currentDate,
                 
             ]);
 

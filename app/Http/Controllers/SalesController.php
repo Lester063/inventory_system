@@ -20,10 +20,11 @@ class SalesController extends Controller
         $mysales=MySale::all();
         $sales=Sales::where('item_id',$id)->join('my_sales','my_sales.sales_code','=','sales.sales_code')->get(['sales.*','my_sales.*']);
         */
+        $numnum=0;
         $totalSales=0;
         $items=Item::all();
         $sales=Sales::orderBy('sales.created_at','desc')->join('items','items.id','=','sales.item_id')->get(['sales.*','items.*']);
-        return view('sales.index')->with('sales',$sales)->with('totalSales',$totalSales);
+        return view('sales.index')->with('sales',$sales)->with('totalSales',$totalSales)->with('items',$items)->with('numnum',$numnum);
         /*
         $sales=Sales::orderBy('created_at','desc')->paginate(10);
         return view('sales.index')->with('sales',$sales)->with('totalSales',$totalSales);
@@ -32,7 +33,23 @@ class SalesController extends Controller
 
     public function indexess(Request $request)
     {
-       
+        $fromDate=$request->itemsalesfromDate;
+        $toDate=$request->itemsalestoDate;
+        $itemsFilter=$request->itemsFilter;
+        if(!$request->ajax()){
+            $sales=Sales::latest()->paginate(10);
+            return view('sales.salesdatacontainer')->with('sales',$sales);
+        }
+        else{
+            $items=Item::all();
+            if($itemsFilter){
+                $sales=Sales::whereIn('sales.item_id',$itemsFilter)->whereBetween('sales.sold_date', [$fromDate, $toDate])->join('items','items.id','=','sales.item_id')->get(['sales.*','items.*']);
+            }else if($itemsFilter==''){
+                $sales=Sales::whereBetween('sales.sold_date', [$fromDate, $toDate])->join('items','items.id','=','sales.item_id')->get(['sales.*','items.*']);
+            }
+            $numnum=$sales->count();
+            return view('sales.salesdatacontainer')->with('sales',$sales)->with('numnum',$numnum);
+        }
     }
 
 
