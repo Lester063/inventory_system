@@ -1,6 +1,21 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+    <style>
+        .tables{
+            margin-top:50px;
+        }
+        .tables tr th{
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 10px;
+        }
+        .tables tr td{
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+    </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -205,8 +220,32 @@ function SalesFilter(){
             'itemsFilter':itemsFilter,
         },
             success:function(response){
-                $('.table').html(response);
-                //document.getElementById('numnum').innerHTML={{$numnum}};
+                let count=0;
+                let output=`
+                        <tr>
+                            <th style="width:40%">Item</th>
+                            <th style="width:20%">Sales Code</th>
+                            <th style="width:20%">Sales Item Quantity</th>
+                            <th style="width:20%">Sales Total Price</th>
+                        </tr>;
+                        `;
+                $.each(response, function(key, sale){
+                    count++;
+                    output += `
+                        <tr>
+                            <td style="width:40%">${sale.item_name}</td>
+                            <td style="width:20%">${sale.sales_code}</td>
+                            <td style="width:20%">${sale.salesItem_quantity}</td>
+                            <td style="width:20%">${sale.sales_totalPrice}</td>
+                        </tr>
+                        `;
+                });
+                $('#tables').html(output);
+                document.getElementById('salesCount').innerHTML='Filtered Items: '+count;
+                
+                
+                //document.getElementById('salesCount').innerHTML=response[salesCount1];
+                
             }
         })
 }
