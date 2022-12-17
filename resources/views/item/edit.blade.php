@@ -8,7 +8,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
 		        <div class="form-group">
 		            <strong>Item Name:</strong>
-		            <input type="text" name="item_name" value="{{$item->item_name}}"class="form-control" placeholder="Item Name"  autocomplete="itemname" autofocus>
+		            <input type="text" name="item_name"id="item_name" value="{{$item->item_name}}"class="form-control" placeholder="Item Name"  autocomplete="itemname" autofocus>
 		        </div>
 		    </div>
 
